@@ -1,0 +1,15 @@
+{
+  "name": "doom",
+  "url": "https://github.com/joelpellucid/doom-fancysearch",
+  "license": "MIT",
+  "classPath": "src",
+  "tags": ["js", "doom", "fancy", "fancysearch", "fancy"],
+  "description": "FancySearch component for Doom.",
+  "releasenote": "first release.",
+  "version": "0.1.0",
+  "contributors": ["joelpellucid"],
+  "dependencies" : {
+    "doom" : "",
+    "FancySearch" : ""
+  }
+}

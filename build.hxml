@@ -1,0 +1,10 @@
+-lib doom
+-lib fancysearch
+-lib fancybrowser
+-lib thx.core
+-lib dots
+-js bin/index.js
+-cp src
+-cp demo
+-main Main
+doom.fs.FancySearch
