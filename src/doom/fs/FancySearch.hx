@@ -3,11 +3,12 @@ package doom.fs;
 import thx.Dynamics;
 import js.html.Element;
 import Doom.*;
-//import fancy.Search.Options as FancySearchOptions;
+import doom.html.Html.*;
+import doom.core.VNodes;
 import haxe.Constraints.Function;
 using thx.Objects;
 
-class FancySearch extends doom.Component<FancySearchApi, FancySearchState> {
+class FancySearch extends doom.html.Component<FancySearchProps> {
   //static var optionNames = [ "mode" ];
   //static var eventNames = [ "changes" ];
 
@@ -22,12 +23,12 @@ class FancySearch extends doom.Component<FancySearchApi, FancySearchState> {
   override function didMount() {
     fancySearch = fancy.Search.createFromContainer(element, {
       suggestionOptions : {
-        suggestions : state.suggestions
+        suggestions : props.suggestions
       }
     });
     //setupEvents();
-    if(null != api.mount)
-      api.mount(fancySearch);
+    if(null != props.mount)
+      props.mount(fancySearch);
   }
 
   function setupEvents() {
@@ -78,6 +79,7 @@ class FancySearch extends doom.Component<FancySearchApi, FancySearchState> {
   }
 }
 
-typedef FancySearchState = {
-  suggestions : Array<String>
+typedef FancySearchProps = {
+  suggestions : Array<String>,
+  ?mount : fancy.Search -> Void
 };

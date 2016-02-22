@@ -4,7 +4,7 @@ import Doom.*;
 
 class Helpers {
   public static function createFancySearch(suggestions : Array<String>) {
-    return new FancySearch({}, {
+    return new FancySearch({
       suggestions : suggestions
     });
   }
