@@ -1,9 +1,9 @@
-package doom.fs;
+// package doom.fs;
 
-import fancy.Search as FS;
-import js.html.Element;
-import js.html.Event;
+// import fancy.Search as FS;
+// import js.html.Element;
+// import js.html.Event;
 
-typedef FancySearchApi = {
-  ?mount : FS -> Void
-}
+// typedef FancySearchApi = {
+//   ?mount : FS -> Void
+// }

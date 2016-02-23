@@ -2,6 +2,7 @@
 -lib fancysearch
 -lib fancybrowser
 -lib thx.core
+-lib thx.promise
 -lib dots
 -js bin/index.js
 -cp src

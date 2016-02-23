@@ -8,12 +8,22 @@ import doom.core.VNodes;
 import haxe.Constraints.Function;
 using thx.Objects;
 
-class FancySearch extends doom.html.Component<FancySearchProps> {
+class FancySearch<T> extends doom.html.Component<FancySearchProps<T>> {
+
+  public static function with<T>(items : Array<T>, suggestionToString : T -> String) {
+    return (
+      new doom.fs.FancySearch<T>({
+        suggestions : items,
+        suggestionToString : suggestionToString
+      }).asNode()
+    );
+  }
+
   //static var optionNames = [ "mode" ];
   //static var eventNames = [ "changes" ];
 
-  var fancySearch : fancy.Search;
-  var events : Map<String, haxe.Constraints.Function>;
+  var fancySearch : fancy.Search<T>;
+  //var events : Map<String, haxe.Constraints.Function>;
 
   override function render()
     return div([ "class" => "doom-fancysearch" ], [
@@ -23,7 +33,8 @@ class FancySearch extends doom.html.Component<FancySearchProps> {
   override function didMount() {
     fancySearch = fancy.Search.createFromContainer(element, {
       suggestionOptions : {
-        suggestions : props.suggestions
+        suggestions : props.suggestions,
+        suggestionToString : props.suggestionToString
       }
     });
     //setupEvents();
@@ -31,19 +42,18 @@ class FancySearch extends doom.html.Component<FancySearchProps> {
       props.mount(fancySearch);
   }
 
-  function setupEvents() {
-    // events = new Map();
-    // for(name in eventNames) {
-    //   var f = Reflect.field(api, name);
-    //   if(null == f) continue;
-    //   events.set(name, f);
-    //   //editor.on(name, f);
-    // }
-  }
+  // function setupEvents() {
+  //   events = new Map();
+  //   for(name in eventNames) {
+  //     var f = Reflect.field(api, name);
+  //     if(null == f) continue;
+  //     events.set(name, f);
+  //   }
+  // }
 
   function clearEvents() {
-    if(null == events)
-      return;
+    //if(null == events)
+      //return;
     //for(name in events.keys()) {
       //editor.off(name, events.get(name));
     //}
@@ -71,15 +81,16 @@ class FancySearch extends doom.html.Component<FancySearchProps> {
     element.innerHTML = "";
   }
 
-  function migrate(old : FancySearch) {
+  function migrate(old : FancySearch<T>) {
     if(null == old.fancySearch) return;
     old.clearEvents();
     fancySearch = old.fancySearch;
-    setupEvents();
+    //setupEvents();
   }
 }
 
-typedef FancySearchProps = {
-  suggestions : Array<String>,
-  ?mount : fancy.Search -> Void
+typedef FancySearchProps<T> = {
+  suggestions : Array<T>,
+  suggestionToString : T -> String,
+  ?mount : fancy.Search<T> -> Void
 };
