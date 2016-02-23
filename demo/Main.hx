@@ -1,4 +1,5 @@
 import Helpers.*;
+import haxe.ds.Option;
 
 class Main {
   static function main() {
@@ -7,10 +8,22 @@ class Main {
         { name : "Bill", value : 99 },
         { name : "Bob", value : 100 }
       ],
-      suggestionToString : function(item : { name : String, value : Int }) {
+      suggestionToString : function(item : SampleItem) {
         return item.name;
+      },
+      onChooseSelection: function(suggestionToString : SampleItem -> String, e : js.html.InputElement, value : Option<SampleItem>) {
+
+        switch value {
+          case Some(item): e.value = suggestionToString(item); trace(item);
+          case None: trace("no value");
+        }
       }
     });
     Doom.browser.mount(fancySearch, js.Browser.document.getElementById("fs-container"));
   }
+}
+
+typedef SampleItem = {
+  name : String,
+  value : Int
 }
