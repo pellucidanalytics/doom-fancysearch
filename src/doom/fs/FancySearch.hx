@@ -10,11 +10,18 @@ using thx.Objects;
 
 class FancySearch<T> extends doom.html.Component<FancySearchProps<T>> {
 
-  public static function with<T>(suggestions : Array<T>, suggestionToString : T -> String, onChooseSelection : SelectionChooseFunction<T>) {
+  // TODO: how to we get the static .with()?
+  // @:state       var suggestions : Array<T>;
+  // @:state       var suggestionToString : T -> String;
+  // @:state(opt)  var onChooseSelection : SelectionChooseFunction<T>;
+  // @:state(opt)  var placeholder : String;
+
+  public static function with<T>(suggestions : Array<T>, suggestionToString : T -> String, onChooseSelection : SelectionChooseFunction<T>, placeholder : String) {
     return new doom.fs.FancySearch<T>({
       suggestions : suggestions,
       suggestionToString : suggestionToString,
-      onChooseSelection : onChooseSelection
+      onChooseSelection : onChooseSelection,
+      placeholder : placeholder
     });
   }
 
