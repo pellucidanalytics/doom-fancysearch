@@ -17,7 +17,8 @@ class Main {
           case Some(item): e.value = suggestionToString(item); trace(item);
           case None: trace("no value");
         }
-      }
+      },
+      placeholder : "this is my placeholder"
     });
     Doom.browser.mount(fancySearch, js.Browser.document.getElementById("fs-container"));
   }

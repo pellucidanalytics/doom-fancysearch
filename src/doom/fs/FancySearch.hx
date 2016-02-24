@@ -9,6 +9,7 @@ import haxe.ds.Option;
 using thx.Objects;
 
 class FancySearch<T> extends doom.html.Component<FancySearchProps<T>> {
+
   public static function with<T>(suggestions : Array<T>, suggestionToString : T -> String, onChooseSelection : SelectionChooseFunction<T>) {
     return new doom.fs.FancySearch<T>({
       suggestions : suggestions,
@@ -21,7 +22,7 @@ class FancySearch<T> extends doom.html.Component<FancySearchProps<T>> {
 
   override function render()
     return div([ "class" => "doom-fancysearch" ], [
-      input([ "type" => "text", "class" => "fancysearch-input" ])
+      input([ "type" => "text", "class" => "fancysearch-input", "placeholder" => props.placeholder ])
     ]);
 
   override function didMount() {
@@ -51,5 +52,6 @@ typedef FancySearchProps<T> = {
   suggestionToString : T -> String,
   ?mount : fancy.Search<T> -> Void,
   ?unmount : fancy.Search<T> -> Void,
-  ?onChooseSelection : SelectionChooseFunction<T>
+  ?onChooseSelection : SelectionChooseFunction<T>,
+  ?placeholder : String
 };
