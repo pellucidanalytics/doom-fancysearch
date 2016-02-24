@@ -4,26 +4,20 @@ import thx.Dynamics;
 import js.html.Element;
 import Doom.*;
 import doom.html.Html.*;
-import doom.core.VNodes;
 import haxe.Constraints.Function;
 import haxe.ds.Option;
 using thx.Objects;
 
 class FancySearch<T> extends doom.html.Component<FancySearchProps<T>> {
-
   public static function with<T>(suggestions : Array<T>, suggestionToString : T -> String, onChooseSelection : SelectionChooseFunction<T>) {
     return new doom.fs.FancySearch<T>({
       suggestions : suggestions,
       suggestionToString : suggestionToString,
       onChooseSelection : onChooseSelection
-    }).asNode();
+    });
   }
 
-  //static var optionNames = [ "mode" ];
-  //static var eventNames = [ "changes" ];
-
   var fancySearch : fancy.Search<T>;
-  //var events : Map<String, haxe.Constraints.Function>;
 
   override function render()
     return div([ "class" => "doom-fancysearch" ], [
@@ -38,55 +32,15 @@ class FancySearch<T> extends doom.html.Component<FancySearchProps<T>> {
         onChooseSelection : props.onChooseSelection
       }
     });
-    //setupEvents();
     if(null != props.mount)
       props.mount(fancySearch);
   }
 
-  // function setupEvents() {
-  //   events = new Map();
-  //   for(name in eventNames) {
-  //     var f = Reflect.field(api, name);
-  //     if(null == f) continue;
-  //     events.set(name, f);
-  //   }
-  // }
-
-  function clearEvents() {
-    //if(null == events)
-      //return;
-    //for(name in events.keys()) {
-      //editor.off(name, events.get(name));
-    //}
-  }
-/*
-  override function didRefresh() {
-    if(null == editor) return;
-    for(field in optionNames) {
-      var current = editor.getOption(field),
-          value = Reflect.field(state, field);
-      if(null == value)
-        value = Reflect.field(codemirror.CodeMirror.defaults, field);
-      if(current != value) {
-        editor.setOption(field, value);
-      }
-    }
-    editor.setValue(state.value);
-    if(null != api.refresh)
-      api.refresh(editor);
-  }
-*/
-
-  override function didUnmount() {
-    clearEvents();
+  override function willUnmount() {
+    if(null != props.unmount)
+      props.unmount(fancySearch);
+    fancySearch = null;
     element.innerHTML = "";
-  }
-
-  function migrate(old : FancySearch<T>) {
-    if(null == old.fancySearch) return;
-    old.clearEvents();
-    fancySearch = old.fancySearch;
-    //setupEvents();
   }
 }
 
@@ -96,5 +50,6 @@ typedef FancySearchProps<T> = {
   suggestions : Array<T>,
   suggestionToString : T -> String,
   ?mount : fancy.Search<T> -> Void,
+  ?unmount : fancy.Search<T> -> Void,
   ?onChooseSelection : SelectionChooseFunction<T>
 };
