@@ -2,7 +2,6 @@ package doom.fs;
 
 import thx.Dynamics;
 import js.html.Element;
-import Doom.*;
 import doom.html.Html.*;
 import haxe.Constraints.Function;
 import haxe.ds.Option;
