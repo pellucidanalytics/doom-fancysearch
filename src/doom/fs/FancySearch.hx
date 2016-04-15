@@ -8,15 +8,9 @@ import haxe.ds.Option;
 using thx.Objects;
 
 class FancySearch<T> extends doom.html.Component<FancySearchProps<T>> {
-
-  // TODO: how to we get the static .with()?
-  // @:state       var suggestions : Array<T>;
-  // @:state       var suggestionToString : T -> String;
-  // @:state(opt)  var onChooseSelection : SelectionChooseFunction<T>;
-  // @:state(opt)  var placeholder : String;
-
-  public static function with<T>(suggestions : Array<T>, suggestionToString : T -> String, onChooseSelection : SelectionChooseFunction<T>, placeholder : String) {
+  public static function with<T>(value : T, suggestions : Array<T>, suggestionToString : T -> String, onChooseSelection : SelectionChooseFunction<T>, placeholder : String) {
     return new doom.fs.FancySearch<T>({
+      value : value,
       suggestions : suggestions,
       suggestionToString : suggestionToString,
       onChooseSelection : onChooseSelection,
@@ -28,7 +22,7 @@ class FancySearch<T> extends doom.html.Component<FancySearchProps<T>> {
 
   override function render()
     return div([ "class" => "doom-fancysearch" ], [
-      input([ "type" => "text", "class" => "fancysearch-input", "placeholder" => props.placeholder ])
+      input([ "type" => "text", "value" => (null == props.value ? null : props.suggestionToString(props.value)), "class" => "fancysearch-input", "placeholder" => props.placeholder ])
     ]);
 
   override function didMount() {
@@ -51,13 +45,14 @@ class FancySearch<T> extends doom.html.Component<FancySearchProps<T>> {
   }
 }
 
-typedef SelectionChooseFunction<T> = (T -> String) -> js.html.InputElement -> Option<T> -> Void;
+typedef SelectionChooseFunction<T> = js.html.InputElement -> Option<T> -> Void;
 
 typedef FancySearchProps<T> = {
+  ?value : Null<T>,
   suggestions : Array<T>,
   suggestionToString : T -> String,
+  ?placeholder : String,
   ?mount : fancy.Search<T> -> Void,
   ?unmount : fancy.Search<T> -> Void,
-  ?onChooseSelection : SelectionChooseFunction<T>,
-  ?placeholder : String
+  ?onChooseSelection : SelectionChooseFunction<T>
 };
