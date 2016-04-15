@@ -3,15 +3,14 @@ import haxe.ds.Option;
 
 class Main {
   static function main() {
+    var suggestionToString = function(item : SampleItem) return item.name;
     var fancySearch = new doom.fs.FancySearch({
       suggestions: [
         { name : "Bill", value : 99 },
         { name : "Bob", value : 100 }
       ],
-      suggestionToString : function(item : SampleItem) {
-        return item.name;
-      },
-      onChooseSelection: function(suggestionToString : SampleItem -> String, e : js.html.InputElement, value : Option<SampleItem>) {
+      suggestionToString : suggestionToString,
+      onChooseSelection: function(e : js.html.InputElement, value : Option<SampleItem>) {
 
         switch value {
           case Some(item): e.value = suggestionToString(item); trace(item);

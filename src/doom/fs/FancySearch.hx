@@ -8,11 +8,13 @@ import haxe.ds.Option;
 using thx.Objects;
 
 class FancySearch<T> extends doom.html.Component<FancySearchProps<T>> {
-  public static function with<T>(suggestions : Array<T>, suggestionToString : T -> String, onChooseSelection : SelectionChooseFunction<T>) {
+  public static function with<T>(value : T, suggestions : Array<T>, suggestionToString : T -> String, onChooseSelection : SelectionChooseFunction<T>, placeholder : String) {
     return new doom.fs.FancySearch<T>({
+      value : value,
       suggestions : suggestions,
       suggestionToString : suggestionToString,
-      onChooseSelection : onChooseSelection
+      onChooseSelection : onChooseSelection,
+      placeholder : placeholder
     });
   }
 
@@ -20,7 +22,7 @@ class FancySearch<T> extends doom.html.Component<FancySearchProps<T>> {
 
   override function render()
     return div([ "class" => "doom-fancysearch" ], [
-      input([ "type" => "text", "class" => "fancysearch-input" ])
+      input([ "type" => "text", "value" => (null == props.value ? null : props.suggestionToString(props.value)), "class" => "fancysearch-input", "placeholder" => props.placeholder ])
     ]);
 
   override function didMount() {
@@ -43,11 +45,13 @@ class FancySearch<T> extends doom.html.Component<FancySearchProps<T>> {
   }
 }
 
-typedef SelectionChooseFunction<T> = (T -> String) -> js.html.InputElement -> Option<T> -> Void;
+typedef SelectionChooseFunction<T> = js.html.InputElement -> Option<T> -> Void;
 
 typedef FancySearchProps<T> = {
+  ?value : Null<T>,
   suggestions : Array<T>,
   suggestionToString : T -> String,
+  ?placeholder : String,
   ?mount : fancy.Search<T> -> Void,
   ?unmount : fancy.Search<T> -> Void,
   ?onChooseSelection : SelectionChooseFunction<T>
