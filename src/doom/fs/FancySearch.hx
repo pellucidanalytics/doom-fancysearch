@@ -8,12 +8,13 @@ import haxe.ds.Option;
 using thx.Objects;
 
 class FancySearch<T> extends doom.html.Component<FancySearchProps<T>> {
-  public static function with<T>(value : T, suggestions : Array<T>, suggestionToString : T -> String, onChooseSelection : SelectionChooseFunction<T>, placeholder : String) {
+  public static function with<T>(value : T, suggestions : Array<T>, suggestionToString : T -> String, onChooseSelection : SelectionChooseFunction<T>, ?onClearSelection : Void -> Void, placeholder : String) {
     return new doom.fs.FancySearch<T>({
       value : value,
       suggestions : suggestions,
       suggestionToString : suggestionToString,
       onChooseSelection : onChooseSelection,
+      onClearSelection : onClearSelection,
       placeholder : placeholder
     });
   }
@@ -31,7 +32,8 @@ class FancySearch<T> extends doom.html.Component<FancySearchProps<T>> {
         suggestions : props.suggestions,
         suggestionToString : props.suggestionToString,
         onChooseSelection : props.onChooseSelection
-      }
+      },
+      onClearButtonClick : null == props.onClearSelection ? null : function(_) props.onClearSelection()
     });
     if(null != props.mount)
       props.mount(fancySearch);
@@ -54,5 +56,6 @@ typedef FancySearchProps<T> = {
   ?placeholder : String,
   ?mount : fancy.Search<T> -> Void,
   ?unmount : fancy.Search<T> -> Void,
-  ?onChooseSelection : SelectionChooseFunction<T>
+  ?onChooseSelection : SelectionChooseFunction<T>,
+  ?onClearSelection: Void -> Void
 };
