@@ -7,7 +7,6 @@ import doom.core.VNode;
 using thx.Arrays;
 using thx.Options;
 
-import fancy.Search;
 import fancy.search.Action;
 import fancy.search.State;
 import fancy.search.config.RendererConfig;
@@ -15,22 +14,23 @@ import fancy.search.config.RendererConfig;
 typedef Props<Sug, Value> = {
   state: State<Sug, String, Value>,
   cfg: RendererConfig<Sug, String, VNode>,
-  dispatch: Action<Sug, String, Value> -> Void
+  dispatch: Action<Sug, String, Value> -> Void,
+  placeholder: String
 };
 
 class Autocomplete {
   public static function render<Sug, Value>(props: Props<Sug, Value>) {
     return div([
-      renderInput(props.cfg.keys, props.cfg.classes, props.dispatch, props.state.filter),
+      renderInput(props.cfg.keys, props.cfg.classes, props.placeholder, props.dispatch, props.state.filter),
       renderMenu(props.cfg, props.dispatch, props.state)
     ]);
   }
 
-  static function renderInput(keys: KeyboardConfig, classes: ClassNameConfig, dispatch, value: String) {
+  static function renderInput(keys: KeyboardConfig, classes: ClassNameConfig, placeholder, dispatch, value: String) {
     return input([
       "class" => "fancify " + classes.input,
       "type" => "text",
-      "placeholder" => "Search for Something",
+      "placeholder" => placeholder,
       "value" => value,
       "focus" => function (el, _) {
         var inpt: InputElement = cast el;

@@ -35,6 +35,7 @@ class FancySearch<T> extends doom.html.Component<FancySearchProps<T>> {
           span(raw(pattern.map(props.suggestionToString(sug), e -> '<b>${e.matched(1)}</b>')));
         }
       },
+      placeholder: props.placeholder,
       dispatch: (act) -> fancySearch.store.dispatch(act)
     });
   }
