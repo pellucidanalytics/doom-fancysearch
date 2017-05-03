@@ -40,19 +40,26 @@ class FancySearch<T> extends doom.html.Component<FancySearchProps<T>> {
     });
   }
 
+  function ensureFancySearch() {
+    if (this.fancySearch == null) {
+      fancySearch = new fancy.Search(AutocompleteDefaults.sync({
+        sugEq: (a, b) -> props.suggestionToString(a) == props.suggestionToString(b),
+        minLength: 1,
+        alwaysHighlight: false,
+        initValue: props.value,
+        suggestions: props.suggestions,
+        filter: (sug, search) -> thx.Strings.caseInsensitiveContains(props.suggestionToString(sug), search),
+        limit: 25
+      }));
+    }
+  }
+
   override function willMount() {
-    fancySearch = new fancy.Search(AutocompleteDefaults.sync({
-      sugEq: (a, b) -> props.suggestionToString(a) == props.suggestionToString(b),
-      minLength: 1,
-      alwaysHighlight: false,
-      initValue: props.value,
-      suggestions: props.suggestions,
-      filter: (sug, search) -> thx.Strings.caseInsensitiveContains(props.suggestionToString(sug), search),
-      limit: 25
-    }));
+    ensureFancySearch();
   }
 
   override function didMount() {
+    ensureFancySearch();
     fancySearch.store.stream().next(_ -> update(props)).run();
     fancySearch.values.next(val -> {
       var input: js.html.InputElement = cast element.querySelector("input");
