@@ -66,7 +66,9 @@ class FancySearch<T> extends doom.html.Component<FancySearchProps<T>> {
       switch val {
         case Raw(_): props.onChooseSelection(input, None);
         case Value(v):
-          input.value = props.suggestionToString(v);
+          var s = props.suggestionToString(v);
+          fancySearch.store.dispatch(SetFilter(s));
+          input.value = s;
           props.onChooseSelection(input, Some(v));
       }
     }).run();

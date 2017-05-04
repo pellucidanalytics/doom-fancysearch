@@ -43,7 +43,7 @@ class Autocomplete {
         dispatch(SetFilter(inpt.value));
       },
       "keydown" => function (_, e: js.html.KeyboardEvent) {
-
+        // TODO: don't capture keys if state.menu == Closed(_)
         e.stopPropagation();
         var code = e.which != null ? e.which : e.keyCode;
 
