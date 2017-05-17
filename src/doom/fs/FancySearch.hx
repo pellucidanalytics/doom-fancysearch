@@ -38,7 +38,7 @@ class FancySearch<T> extends doom.html.Component<FancySearchProps<T>> {
       placeholder: props.placeholder,
       dispatch: function(act) {
         if(null == fancySearch) return;
-        fancySearch.store.dispatch(act)
+        fancySearch.store.dispatch(act);
       }
     });
   }
