@@ -10,14 +10,14 @@
       "name": "dots",
       "type": "git",
       "dir": "src",
-      "ref": "9105201",
+      "ref": "d4b68fa",
       "url": "git@github.com:fponticelli/dots"
     },
     {
       "name": "fancysearch",
       "type": "git",
       "dir": "src",
-      "ref": "0257eea",
+      "ref": "15f63bc",
       "url": "git@github.com:mlms13/FancySearch"
     },
     {
