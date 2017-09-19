@@ -96,7 +96,8 @@ class Autocomplete {
     var cls = getContainerClassesForState(cfg.classes, state.menu);
 
     return switch state.menu {
-      case Closed(_): div(["class" => cls ]);
+      case Closed(Inactive): div(["class" => cls ]);
+      case Closed(FailedCondition(msg)): div(["class" => cls ], [msg]);
       case Open(Results(suggs), highlighted):
         div([ "class" => cls ], [
           ul([
