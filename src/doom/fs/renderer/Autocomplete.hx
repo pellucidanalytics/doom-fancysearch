@@ -25,7 +25,7 @@ class Autocomplete {
       case _: false;
     };
 
-    return div([
+    return div(["class" => "fs-search"], [
       renderInput(props.cfg.keys, props.cfg.classes, props.placeholder, props.dispatch, captureKeys, props.state.filter),
       renderMenu(props.cfg, props.dispatch, props.state)
     ]);
