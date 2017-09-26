@@ -39,7 +39,7 @@ class Autocomplete {
     captureKeys: Bool,
     value: String) {
     return input([
-      "class" => "fancify " + classes.input,
+      "class" => "form-control fancify " + classes.input,
       "type" => "text",
       "placeholder" => placeholder,
       "value" => value,
